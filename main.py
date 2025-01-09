@@ -7,6 +7,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
 
 # 添加项目根目录到sys.path
 sys.path.append(
@@ -42,6 +43,9 @@ loginUrl = "http://zhjw.qfnu.edu.cn/Logon.do?method=logonLdap"  # 登录请求UR
 dataStrUrl = (
     "http://zhjw.qfnu.edu.cn/Logon.do?method=logon&flag=sess"  # 初始数据请求URL
 )
+
+# 初始化最近一次访问的时间
+last_access_time = datetime.now()
 
 
 def get_initial_session():
@@ -254,3 +258,21 @@ async def handle_QFNUScoreReminder_group_notice(websocket, msg):
             "处理QFNUScoreReminder群通知失败，错误信息：" + str(e),
         )
         return
+
+
+# 定时监控，每分钟访问一次
+async def monitor_score():
+    global last_access_time
+    if datetime.now().minute % 1 == 0 and datetime.now() - last_access_time > timedelta(
+        minutes=1
+    ):
+        # 刷新最近一次访问的时间
+        last_access_time = datetime.now()
+
+        # 从数据列表中获取每人的用户名和密码
+        for user_info in DATA_DIR:
+            user_account = user_info.get("user_account")
+            user_password = user_info.get("user_password")
+
+            # 模拟登录
+            session, cookies = simulate_login(user_account, user_password)
