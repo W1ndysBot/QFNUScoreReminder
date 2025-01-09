@@ -15,7 +15,8 @@ def init_db():
         """
         CREATE TABLE IF NOT EXISTS users (
             username TEXT PRIMARY KEY,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            group_id TEXT NOT NULL
         )
     """
     )
@@ -33,21 +34,22 @@ def index():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        save_to_db(username, password)
-        success_message = "账号和密码已保存！"
+        group_id = request.form["group_id"]
+        save_to_db(username, password, group_id)
+        success_message = "账号和密码已保存，请关闭此页面，等待群内机器人通知即可！"
     return render_template("index.html", success_message=success_message)
 
 
-def save_to_db(username, password):
+def save_to_db(username, password, group_id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT OR REPLACE INTO users (username, password) VALUES (?, ?)",
-        (username, password),
+        "INSERT OR REPLACE INTO users (username, password, group_id) VALUES (?, ?, ?)",
+        (username, password, group_id),
     )
     conn.commit()
     conn.close()
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=5001, debug=True)
