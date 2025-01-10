@@ -177,7 +177,7 @@ def index():
             save_to_db(username, password, group_id, qq_id)
             success_message = "账号和密码已保存，请关闭此页面，等待群内机器人通知即可！"
         except Exception as e:
-            error_message = str(e) if str(e) else "发生未知错误"
+            error_message = str(e) if str(e) else "发生未知错误，请联系管理员"
 
     return render_template(
         "index.html", success_message=success_message, error_message=error_message
