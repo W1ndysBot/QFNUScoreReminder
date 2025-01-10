@@ -256,6 +256,7 @@ async def handle_QFNUScoreReminder_group_notice(websocket, msg):
         role = str(msg.get("sender", {}).get("role"))
         message_id = str(msg.get("message_id"))
 
+        
     except Exception as e:
         logging.error(f"处理QFNUScoreReminder群通知失败: {e}")
         await send_group_msg(
