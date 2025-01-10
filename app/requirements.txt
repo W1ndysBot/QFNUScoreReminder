@@ -1,4 +1,4 @@
 Flask
 requests
 Pillow
-sqlite3
+gunicorn
