@@ -4,11 +4,20 @@ import requests
 from PIL import Image
 from io import BytesIO
 from captcha_ocr import get_ocr_res
+import os
 
 app = Flask(__name__)
 
+DATA_DIR = os.path.join(
+    os.path.dirname(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    ),
+    "data",
+    "QFNUScoreReminder",
+)
+
 # 数据库文件路径
-DATABASE = r"D:\bot\W1ndysBot\app\scripts\QFNUScoreReminder\app\database.db"
+DATABASE = os.path.join(DATA_DIR, "database.db")
 
 
 # 创建数据库表
