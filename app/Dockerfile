@@ -4,7 +4,7 @@ FROM python:3.9-slim
 # 设置工作目录
 WORKDIR /app
 
-# 复制项目文件到容器中
+# 复制当前目录内容到容器中的/app目录
 COPY . /app
 
 # 安装项目依赖
@@ -13,6 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 暴露应用运行的端口
 EXPOSE 5001
 
-# 允许python文件运行
-CMD ["python", "webserver.py"]
-
+# 使用Gunicorn运行Flask应用
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5001", "webserver:app"]
