@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 重启名为 qfnu-login-webserver 的容器
-docker restart qfnu-login-webserver
+# 重启名为 qfnu-score-reminder-webserver 的容器
+docker restart qfnu-score-reminder-webserver
 
 # 检查容器是否成功重启
 if [ $? -ne 0 ]; then

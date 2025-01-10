@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 设置镜像名称
-IMAGE_NAME="qfnu-login-webserver"
+IMAGE_NAME="qfnu-score-reminder-webserver"
 
 # 构建Docker镜像
 echo "Building Docker image..."
