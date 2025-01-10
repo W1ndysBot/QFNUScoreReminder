@@ -20,7 +20,8 @@ def init_db():
         CREATE TABLE IF NOT EXISTS users (
             username TEXT PRIMARY KEY,
             password TEXT NOT NULL,
-            group_id TEXT NOT NULL
+            group_id TEXT NOT NULL,
+            qq_id TEXT NOT NULL
         )
     """
     )
@@ -170,10 +171,10 @@ def index():
         username = request.form["username"]
         password = request.form["password"]
         group_id = request.form["group_id"]
-
+        qq_id = request.form["qq_id"]
         try:
             simulate_login(username, password)
-            save_to_db(username, password, group_id)
+            save_to_db(username, password, group_id, qq_id)
             success_message = "账号和密码已保存，请关闭此页面，等待群内机器人通知即可！"
         except Exception as e:
             error_message = str(e) if str(e) else "发生未知错误"
@@ -183,12 +184,12 @@ def index():
     )
 
 
-def save_to_db(username, password, group_id):
+def save_to_db(username, password, group_id, qq_id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT OR REPLACE INTO users (username, password, group_id) VALUES (?, ?, ?)",
-        (username, password, group_id),
+        "INSERT OR REPLACE INTO users (username, password, group_id, qq_id) VALUES (?, ?, ?, ?)",
+        (username, password, group_id, qq_id),
     )
     conn.commit()
     conn.close()

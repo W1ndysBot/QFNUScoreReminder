@@ -34,6 +34,10 @@
                     </option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="qq_id">绑定的QQ号</label>
+                <input type="text" class="form-control" id="qq_id" name="qq_id" required>
+            </div>
             <button type="submit" class="btn btn-primary btn-block">提交</button>
         </form>
         <div id="success-message" class="alert alert-success mt-3" {% if success_message %}style="display: block;" {%
