@@ -19,6 +19,8 @@ DATA_DIR = os.path.join(
 # 数据库文件路径
 DATABASE = os.path.join(DATA_DIR, "database.db")
 
+print(DATABASE)
+
 
 # 创建数据库表
 def init_db():
